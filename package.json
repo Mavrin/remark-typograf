@@ -1,0 +1,46 @@
+{
+  "name": "@mavrin/remarkjs-typograf",
+  "version": "1.0.0-alpha.0",
+  "description": "Plugin for remarkjs to make your typography better with typograf",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mavrin/remarkjs-typograf.git"
+  },
+  "keywords": [
+    "remarkjs",
+    "typograf"
+  ],
+  "author": "Konstantin Krivlenia <krivlenia@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mavrin/remarkjs-typograf/issues"
+  },
+  "homepage": "https://github.com/Mavrin/remarkjs-typograf#readme",
+  "dependencies": {
+    "typograf": "^6.11.0",
+    "unist-util-visit": "^2.0.2"
+  },
+  "peerDependencies": {
+    "typograf": "^6.11.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-jest": "^23.8.2",
+    "husky": "^4.2.5",
+    "jest": "^25.3.0",
+    "prettier": "^2.0.4",
+    "pretty-quick": "^2.0.1",
+    "remark": "^12.0.0",
+    "remark-stringify": "^8.0.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
