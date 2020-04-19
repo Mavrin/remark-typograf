@@ -11,9 +11,9 @@ describe("remarkjs typograf", () => {
     expect(
       remark()
         .use(remarkjsTypograf, { typograf: new Typograf({ locale: ["ru"] }) })
-        .processSync("## spread operator...\n")
+        .processSync("## spread operator... end . Some test.\n")
         .toString()
-    ).toEqual("## spread operator…\n");
+    ).toEqual("## spread operator… end. Some test.\n");
   });
 
   it("Should handle for code block", () => {
@@ -33,7 +33,7 @@ describe("remarkjs typograf", () => {
       .use(remarkjsTypograf, { typograf: new Typograf({ locale: ["ru"] }) })
       .processSync("some... `tick tick...` some... test .")
       .toString();
-    expect(result).toEqual("some… `tick tick...`some… test.\n");
+    expect(result).toEqual("some… `tick tick...` some… test.\n");
   });
 
   it("Should handle list", () => {
@@ -42,5 +42,17 @@ describe("remarkjs typograf", () => {
       .processSync("# header\n - one point...\n - second point\n")
       .toString();
     expect(result).toEqual("# header\n\n-   one point…\n-   second point\n");
+  });
+
+  it("Should handle inline block type", () => {
+    const result = remark()
+      .use(remarkjsTypograf, { typograf: new Typograf({ locale: ["ru"] }) })
+      .processSync(
+        "_Italic..._ some... **bold...** . New code [link...](https://github.com) sentence , ~~во внимание~~\n"
+      )
+      .toString();
+    expect(result).toEqual(
+      "_Italic…_ some… **bold…**. New code [link…](https://github.com) sentence, ~~во внимание~~\n"
+    );
   });
 });

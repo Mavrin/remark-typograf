@@ -1,5 +1,8 @@
 const visit = require("unist-util-visit");
 
+const inlineBlockPlaceholder = `inlineBlockPlaceholder`;
+const inlineBlockPlaceHolderLength = inlineBlockPlaceholder.length;
+
 function remarjsTypograf({ typograf } = {}) {
   if (!typograf) {
     throw new Error(
@@ -7,12 +10,34 @@ function remarjsTypograf({ typograf } = {}) {
     );
   }
   function visitor(node, index, parent) {
-    if (parent.children.length - 1 === index) {
-      return (node.value = typograf.execute(node.value));
+    if (index === 0 && parent.children.length > 1) {
+      const typografedText = typograf.execute(
+        node.value + inlineBlockPlaceholder
+      );
+      return (node.value = typografedText.substring(
+        0,
+        typografedText.length - inlineBlockPlaceHolderLength
+      ));
     }
-    if (parent.children[index + 1].type === "inlineCode") {
-      return (node.value = `${typograf.execute(node.value)} `);
+    if (index === parent.children.length - 1 && parent.children.length > 1) {
+      const typografedText = typograf.execute(
+        inlineBlockPlaceholder + node.value
+      );
+      return (node.value = typografedText.substring(
+        inlineBlockPlaceHolderLength,
+        typografedText.length + inlineBlockPlaceHolderLength
+      ));
     }
+    if (parent.children.length > 1) {
+      const typografedText = typograf.execute(
+        inlineBlockPlaceholder + node.value + inlineBlockPlaceholder
+      );
+      return (node.value = typografedText.substring(
+        inlineBlockPlaceHolderLength,
+        typografedText.length - inlineBlockPlaceHolderLength
+      ));
+    }
+    return (node.value = typograf.execute(node.value));
   }
 
   function transform(tree) {
