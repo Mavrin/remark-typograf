@@ -77,11 +77,11 @@ const html = `
 </head>
   <body>
     <div>
-        <h2>Before:</h2>
+        <h2><a target="_blank" href="before.md">Before</a>:</h2>
         <div>${htmlResultWithoutTypograf}</div>
     </div>
     <div>
-       <h2>After:</h2>
+       <h2><a target="_blank" href="after.md">After</a>:</h2>
        <div>${htmlResultWithTypograf}</div>
     </div>
   </body>
