@@ -33,7 +33,12 @@ const originalMarkdown = fs.readFileSync(
 const markdownResultWithTypograf = unified()
   .use(markdown, { commonmark: true })
   .use(remarkjsTypograf, { typograf: new Typograf({ locale: ["ru"] }) })
-  .use(remarkStringify, { gfm: true })
+  .use(remarkStringify, {
+    gfm: true,
+    listItemIndent: "1",
+    rule: "-",
+    ruleSpaces: false,
+  })
   .processSync(originalMarkdown);
 
 const htmlResultWithTypograf = remark()
