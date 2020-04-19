@@ -24,7 +24,6 @@
   },
   "homepage": "https://github.com/Mavrin/remarkjs-typograf#readme",
   "dependencies": {
-    "typograf": "^6.11.0",
     "unist-util-visit": "^2.0.2"
   },
   "peerDependencies": {
