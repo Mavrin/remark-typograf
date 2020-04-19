@@ -83,7 +83,7 @@ const html = `
         <h2>Before (<a target="_blank" href="https://github.com/Mavrin/remarkjs-typograf/blob/gh-pages/after.md">markdown source</a>):</h2>
         <div>${htmlResultWithoutTypograf}</div>
     </div>
-    <div>
+    <div class="example">
        <h2>After (<a target="_blank" href="https://github.com/Mavrin/remarkjs-typograf/blob/gh-pages/after.md">markdown source</a>):</h2>
        <div>${htmlResultWithTypograf}</div>
     </div>
