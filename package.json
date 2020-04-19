@@ -41,6 +41,7 @@
     "remark-html": "^11.0.1",
     "remark-parse": "^8.0.0",
     "remark-stringify": "^8.0.0",
+    "typograf": "^6.11.0",
     "unified": "^9.0.0"
   },
   "husky": {
