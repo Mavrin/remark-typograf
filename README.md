@@ -6,7 +6,7 @@ Example https://mavrin.github.io/remarkjs-typograf/
 
 ## Install
 
-[npm][]:
+[npm](https://docs.npmjs.com/cli/install):
 
 ```sh
 npm install @mavrin/remarkjs-typograf typograf remark
