@@ -69,20 +69,22 @@ const html = `
 <head>
   <meta charset="UTF-8">
   <style>
-    body > div {
+    body > div.example {
       float: left;
       width: 50%;
     }
   </style>
 </head>
   <body>
-    <a href="https://github.com/Mavrin/remarkjs-typograf">Source code on github</a>
     <div>
-        <h2><a target="_blank" href="before.md">Before</a>:</h2>
+        <a href="https://github.com/Mavrin/remarkjs-typograf">Source code on github</a>
+    </div>
+    <div class="example">
+        <h2>Before (<a target="_blank" href="https://github.com/Mavrin/remarkjs-typograf/blob/gh-pages/after.md">markdown source</a>):</h2>
         <div>${htmlResultWithoutTypograf}</div>
     </div>
     <div>
-       <h2><a target="_blank" href="after.md">After</a>:</h2>
+       <h2>After (<a target="_blank" href="https://github.com/Mavrin/remarkjs-typograf/blob/gh-pages/after.md">markdown source</a>):</h2>
        <div>${htmlResultWithTypograf}</div>
     </div>
   </body>
