@@ -1,9 +1,9 @@
 {
-  "name": "remarkjs-typograf simple expample",
+  "name": "remarkjs-typograf-simple-expample",
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "@mavrin/remarkjs-typograf": "^1.0.0-alpha.0",
+    "@mavrin/remarkjs-typograf": "^1.0.0",
     "remark": "^12.0.0",
     "typograf": "^6.11.0"
   }
