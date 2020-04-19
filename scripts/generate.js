@@ -83,4 +83,8 @@ const html = `
 </html>
 `;
 
-fs.writeFileSync(path.resolve(path.join(distPath, "index.html")), html, "utf8");
+fs.writeFileSync(
+  path.resolve(path.join(distPath, "index.html")),
+  html.trim(),
+  "utf8"
+);
