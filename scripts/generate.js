@@ -76,6 +76,7 @@ const html = `
   </style>
 </head>
   <body>
+    <a href="https://github.com/Mavrin/remarkjs-typograf">Source code on github</a>
     <div>
         <h2><a target="_blank" href="before.md">Before</a>:</h2>
         <div>${htmlResultWithoutTypograf}</div>
