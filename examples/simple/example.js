@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const remark = require("remark");
-const remarkTypograf = require("@mavrin/remarkjs-typograf");
+const remarkTypograf = require("@mavrin/remark-typograf");
 const Typograf = require("typograf");
 
 const processed = remark()

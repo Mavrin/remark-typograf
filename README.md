@@ -1,15 +1,15 @@
 # remarkjs-typograf
 
-Plugin for [remark](https://github.com/remarkjs/remark)  to make your typography better with [typograf](https://github.com/typograf/typograf)
+Plugin for [remark](https://github.com/remarkjs/remark) to make your typography better with [typograf](https://github.com/typograf/typograf)
 
-Example https://mavrin.github.io/remarkjs-typograf/
+Example https://mavrin.github.io/remark-typograf/
 
 ## Install
 
 [npm](https://docs.npmjs.com/cli/install):
 
 ```sh
-npm install @mavrin/remarkjs-typograf typograf remark
+npm install @mavrin/remark-typograf typograf remark
 ```
 
 ## Use
@@ -34,7 +34,7 @@ And our script, `example.js`, looks as follows:
 const fs = require("fs");
 const path = require("path");
 const remark = require("remark");
-const remarkTypograf = require("@mavrin/remarkjs-typograf");
+const remarkTypograf = require("@mavrin/remark-typograf");
 const Typograf = require("typograf");
 
 const processed = remark()
