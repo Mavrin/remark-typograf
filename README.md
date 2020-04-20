@@ -1,6 +1,6 @@
 # remarkjs-typograf
 
-Plugin to make your typography better with https://github.com/typograf
+Plugin for [remarkjs](https://github.com/gnab/remark)  to make your typography better with [typograf](https://github.com/typograf/typograf)
 
 Example https://mavrin.github.io/remarkjs-typograf/
 
