@@ -32,7 +32,10 @@ const originalMarkdown = fs.readFileSync(
 
 const markdownResultWithTypograf = unified()
   .use(markdown, { commonmark: true })
-  .use(remarkjsTypograf, { typograf: new Typograf({ locale: ["ru"] }) })
+  .use(remarkjsTypograf, {
+    typograf: new Typograf({ locale: ["ru"] }),
+    builtIn: false,
+  })
   .use(remarkStringify, {
     gfm: true,
     listItemIndent: "1",
@@ -42,7 +45,10 @@ const markdownResultWithTypograf = unified()
   .processSync(originalMarkdown);
 
 const htmlResultWithTypograf = remark()
-  .use(remarkjsTypograf, { typograf: new Typograf({ locale: ["ru"] }) })
+  .use(remarkjsTypograf, {
+    typograf: new Typograf({ locale: ["ru"] }),
+    builtIn: false,
+  })
   .use(remarkHtml)
   .processSync(originalMarkdown);
 
@@ -65,8 +71,9 @@ fs.writeFileSync(
 );
 
 const html = `
-<html>
+<html lang="ru">
 <head>
+  <title>remark-typograf plugin example</title>
   <meta charset="UTF-8">
   <style>
     body > div.example {

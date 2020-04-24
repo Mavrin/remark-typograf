@@ -1,14 +1,44 @@
 const visit = require("unist-util-visit");
-
+const Typograf = require("typograf");
 const inlineBlockPlaceholder = `inlineBlockPlaceholder`;
 const inlineBlockPlaceHolderLength = inlineBlockPlaceholder.length;
 
-function remarjsTypograf({ typograf } = {}) {
-  if (!typograf) {
+function remarjsTypograf(config = {}) {
+  let { typograf, builtIn = true, ...typografConfig } = config;
+
+  if (!typograf && builtIn === false) {
     throw new Error(
-      "Typograf option should be specified.Please pass instance typograf as option."
+      "Typograf option should be specified. Please pass instance typograf as option or set builtIn to true"
     );
   }
+
+  if (typograf && builtIn === true) {
+    throw new Error(
+      "`builtIn` option is true and `typograf` also is passed. Please set `builtIn` to false or clean `typograf` option"
+    );
+  }
+
+  if (
+    builtIn === true &&
+    typografConfig.locale &&
+    !Array.isArray(typografConfig.locale)
+  ) {
+    throw new Error(
+      `Locale config should be array of string. e.g. {"locale": ["ru"]}`
+    );
+  }
+
+  if (
+    builtIn === true &&
+    !Array.isArray(typografConfig && typografConfig.locale)
+  ) {
+    typografConfig.locale = ["ru"];
+  }
+
+  if (!typograf) {
+    typograf = new Typograf(typografConfig);
+  }
+
   function visitor(node, index, parent) {
     if (index === 0 && parent.children.length > 1) {
       const typografedText = typograf.execute(

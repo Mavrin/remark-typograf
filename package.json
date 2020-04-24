@@ -1,6 +1,6 @@
 {
   "name": "@mavrin/remark-typograf",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "description": "Plugin for remark to make your typography better with typograf",
   "main": "index.js",
   "scripts": {
@@ -32,9 +32,7 @@
   },
   "homepage": "https://github.com/Mavrin/remark-typograf#readme",
   "dependencies": {
-    "unist-util-visit": "^2.0.2"
-  },
-  "peerDependencies": {
+    "unist-util-visit": "^2.0.2",
     "typograf": "^6.11.0"
   },
   "devDependencies": {

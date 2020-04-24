@@ -9,7 +9,7 @@ Example https://mavrin.github.io/remark-typograf/
 [npm](https://docs.npmjs.com/cli/install):
 
 ```sh
-npm install @mavrin/remark-typograf typograf remark
+npm install @mavrin/remark-typograf remark
 ```
 
 ## Use
@@ -28,7 +28,45 @@ function test(...args) {
 ```
 ````
 
-And our script, `example.js`, looks as follows:
+You probably want to use it on the CLI through a config file:
+
+```diff
+  …
+  "remarkConfig": {
+    "plugins": [
+      [
+        "@mavrin/remark-typograf",
+        {
+          "locale": ["ru"]
+        }
+      ]
+    ]
+  }
+…
+```
+
+Or use it on the CLI directly (ru locale will be used as default)
+
+```sh
+remark -u @mavrin/remark-typograf example.md -o processed-example.md
+```
+
+Or use this on the API:
+
+```js
+const fs = require("fs");
+const path = require("path");
+const remark = require("remark");
+const remarkTypograf = require("@mavrin/remark-typograf");
+
+const processed = remark()
+  .use(remarkTypograf, { locale: ["en-US"] })
+  .processSync(fs.readFileSync(path.resolve(__dirname, "example.md")));
+
+fs.writeFileSync(path.resolve(__dirname, "processed-example.md"), processed);
+```
+
+or with custom typograf:
 
 ```js
 const fs = require("fs");
@@ -38,10 +76,13 @@ const remarkTypograf = require("@mavrin/remark-typograf");
 const Typograf = require("typograf");
 
 const processed = remark()
-  .use(remarkTypograf, { typograf: new Typograf({ locale: ["en-US"] }) })
+  .use(remarkTypograf, {
+    typograf: new Typograf({ locale: ["en-US"] }),
+    builtIn: false,
+  })
   .processSync(fs.readFileSync(path.resolve(__dirname, "example.md")));
 
-fs.writeFileSync(path.resolve(__dirname, "processed-expample.md"), processed);
+fs.writeFileSync(path.resolve(__dirname, "processed-example.md"), processed);
 ```
 
 Yields:
