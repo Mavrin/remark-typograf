@@ -1,3 +1,3 @@
-const { remarjsTypograf } = require("./remarkjs-typograf");
+const { remarkTypograf } = require("./remark-typograf");
 
-module.exports = remarjsTypograf;
+module.exports = remarkTypograf;

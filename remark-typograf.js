@@ -1,10 +1,11 @@
 const visit = require("unist-util-visit");
 const Typograf = require("typograf");
+const escapeRegexp = require("lodash.escaperegexp");
 const inlineBlockPlaceholder = `inlineBlockPlaceholder`;
 const inlineBlockPlaceHolderLength = inlineBlockPlaceholder.length;
 
-function remarjsTypograf(config = {}) {
-  let { typograf, builtIn = true, ...typografConfig } = config;
+function remarkTypograf(config = {}) {
+  let { typograf, builtIn = true, keywords = [], ...typografConfig } = config;
 
   if (!typograf && builtIn === false) {
     throw new Error(
@@ -39,35 +40,51 @@ function remarjsTypograf(config = {}) {
     typograf = new Typograf(typografConfig);
   }
 
-  function visitor(node, index, parent) {
+  function applyTypograf(text, index, parent) {
     if (index === 0 && parent.children.length > 1) {
-      const typografedText = typograf.execute(
-        node.value + inlineBlockPlaceholder
-      );
-      return (node.value = typografedText.substring(
+      const typografedText = typograf.execute(text + inlineBlockPlaceholder);
+      return typografedText.substring(
         0,
         typografedText.length - inlineBlockPlaceHolderLength
-      ));
+      );
     }
     if (index === parent.children.length - 1 && parent.children.length > 1) {
-      const typografedText = typograf.execute(
-        inlineBlockPlaceholder + node.value
-      );
-      return (node.value = typografedText.substring(
+      const typografedText = typograf.execute(inlineBlockPlaceholder + text);
+      return typografedText.substring(
         inlineBlockPlaceHolderLength,
         typografedText.length + inlineBlockPlaceHolderLength
-      ));
+      );
     }
     if (parent.children.length > 1) {
       const typografedText = typograf.execute(
-        inlineBlockPlaceholder + node.value + inlineBlockPlaceholder
+        inlineBlockPlaceholder + text + inlineBlockPlaceholder
       );
-      return (node.value = typografedText.substring(
+      return typografedText.substring(
         inlineBlockPlaceHolderLength,
         typografedText.length - inlineBlockPlaceHolderLength
-      ));
+      );
     }
-    return (node.value = typograf.execute(node.value));
+    return typograf.execute(text);
+  }
+
+  function visitor(node, index, parent) {
+    let text = node.value;
+
+    keywords.forEach((keyword) => {
+      const hex = Buffer.from(keyword).toString("hex");
+      const regExp = new RegExp(`${escapeRegexp(keyword)}`, `g`);
+      text = text.replace(regExp, hex);
+    });
+
+    text = applyTypograf(text, index, parent);
+
+    keywords.forEach((keyword) => {
+      const hex = Buffer.from(keyword).toString("hex");
+      const regExp = new RegExp(`${escapeRegexp(hex)}`, `g`);
+      text = text.replace(regExp, keyword);
+    });
+
+    node.value = text;
   }
 
   function transform(tree) {
@@ -78,5 +95,5 @@ function remarjsTypograf(config = {}) {
 }
 
 module.exports = {
-  remarjsTypograf,
+  remarkTypograf,
 };

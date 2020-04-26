@@ -1,6 +1,6 @@
 ## spread operator `...`
 
-It is test...
+It is test... :)
 
 ```js
 function test(...args) {

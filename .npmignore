@@ -6,4 +6,4 @@ scripts
 .eslintrc.js
 remarkjs-typograf.test.js
 examples
-CHANGELOG.md
+coverage

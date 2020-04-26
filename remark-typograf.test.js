@@ -1,15 +1,15 @@
-const remarkjsTypograf = require("./index");
+const remarkTypograf = require("./index");
 const Typograf = require("typograf");
 const remark = require("remark");
 
 describe("remarkjs typograf", () => {
   it("should throw error if typofraf is not specified", () => {
-    expect(() => remarkjsTypograf({ builtIn: false })).toThrow(/Typograf/);
+    expect(() => remarkTypograf({ builtIn: false })).toThrow(/Typograf/);
   });
 
   it("should throw error if typofraf is specified and builtIn true", () => {
     expect(() =>
-      remarkjsTypograf({
+      remarkTypograf({
         typograf: new Typograf({ locale: ["en-US"] }),
         builtIn: true,
       })
@@ -17,7 +17,7 @@ describe("remarkjs typograf", () => {
   });
 
   it("should throw error if locale is not array", () => {
-    expect(() => remarkjsTypograf({ locale: "en" })).toThrow(
+    expect(() => remarkTypograf({ locale: "en" })).toThrow(
       /Locale config should be array of string/
     );
   });
@@ -25,7 +25,7 @@ describe("remarkjs typograf", () => {
   it("Should work with explicit typograf", () => {
     expect(
       remark()
-        .use(remarkjsTypograf, {
+        .use(remarkTypograf, {
           typograf: new Typograf({ locale: ["en-US"] }),
           builtIn: false,
         })
@@ -34,19 +34,40 @@ describe("remarkjs typograf", () => {
     ).toEqual("## spread operator… end. Some test.\n");
   });
 
-  it("Should apply", () => {
+  it("Should apply with default config", () => {
     expect(
       remark()
-        .use(remarkjsTypograf, { locale: ["en-US"] })
+        .use(remarkTypograf)
         .processSync("## spread operator... end . Some test.\n")
         .toString()
     ).toEqual("## spread operator… end. Some test.\n");
   });
 
+  it("Should apply", () => {
+    expect(
+      remark()
+        .use(remarkTypograf, { locale: ["en-US"] })
+        .processSync("## spread operator... end . Some test.\n")
+        .toString()
+    ).toEqual("## spread operator… end. Some test.\n");
+  });
+
+  it("should apply keywords config", () => {
+    const result = remark()
+      .use(remarkTypograf, {
+        keywords: [":(", "TL;DR"],
+      })
+      .processSync(`## 1. Это сложно :(.\nSome test. :( "TL;DR" operator... :(`)
+      .toString();
+    expect(result).toEqual(
+      "## 1. Это сложно :(.\n\nSome test. :( «TL;DR» operator… :(\n"
+    );
+  });
+
   it("Should apply default locale", () => {
     expect(
       remark()
-        .use(remarkjsTypograf, {})
+        .use(remarkTypograf, {})
         .processSync("## spread operator... end . Some test.\n")
         .toString()
     ).toEqual("## spread operator… end. Some test.\n");
@@ -54,7 +75,7 @@ describe("remarkjs typograf", () => {
 
   it("Should handle for code block", () => {
     const result = remark()
-      .use(remarkjsTypograf, { locale: ["ru"] })
+      .use(remarkTypograf, { locale: ["ru"] })
       .processSync(
         "value - some code...\n```js\nconst value = [...[1,3]];\n```"
       )
@@ -66,7 +87,7 @@ describe("remarkjs typograf", () => {
 
   it("Should handle for backtick", () => {
     const result = remark()
-      .use(remarkjsTypograf, { locale: ["ru"] })
+      .use(remarkTypograf, { locale: ["ru"] })
       .processSync("some... `tick tick...` some... test .")
       .toString();
     expect(result).toEqual("some… `tick tick...` some… test.\n");
@@ -74,7 +95,7 @@ describe("remarkjs typograf", () => {
 
   it("Should handle list", () => {
     const result = remark()
-      .use(remarkjsTypograf, { locale: ["ru"] })
+      .use(remarkTypograf, { locale: ["ru"] })
       .processSync("# header\n - one point...\n - second point\n")
       .toString();
     expect(result).toEqual("# header\n\n-   one point…\n-   second point\n");
@@ -82,7 +103,7 @@ describe("remarkjs typograf", () => {
 
   it("Should handle inline block type", () => {
     const result = remark()
-      .use(remarkjsTypograf, { locale: ["ru"] })
+      .use(remarkTypograf, { locale: ["ru"] })
       .processSync(
         "_Italic..._ some... **bold...** . New code [link...](https://github.com) sentence , ~~во внимание~~\n"
       )
