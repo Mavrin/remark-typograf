@@ -38,21 +38,14 @@ function remarkTypograf(config = {}) {
     typograf = new Typograf(typografConfig);
   }
 
-  function getTextNodes(child, textNodes = []) {
-    const children = child.children;
-    if (typeof child.value === "string") {
-      textNodes.push(child.value);
+  function getTextNodes(tree) {
+    const textNodes = [];
+    if (typeof tree.value === "string") {
+      textNodes.push(tree.value);
     }
-    if (!children) {
-      return textNodes;
-    }
-    for (const child of children) {
-      if (typeof child.value === "string") {
-        textNodes.push(child.value);
-      } else {
-        getTextNodes(child.children, textNodes);
-      }
-    }
+    visit(tree, "text", (node) => {
+      textNodes.push(node.value);
+    });
     return textNodes;
   }
 

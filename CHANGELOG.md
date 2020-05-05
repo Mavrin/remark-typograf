@@ -1,3 +1,7 @@
+## 2.1.4 (May 5, 2020)
+
+use visit method instead of own tree walker
+
 ## 2.1.3 (May 5, 2020)
 
 use files section in package.json instead of .npmignore

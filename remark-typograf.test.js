@@ -116,10 +116,12 @@ describe("remarkjs typograf", () => {
   it("Should mark and punctuation", () => {
     const result = remark()
       .use(remarkTypograf, { locale: ["ru"] })
-      .processSync("проверить секцию **Categories,** а у родительского тега\n")
+      .processSync(
+        "проверить секцию **Categories,** а у родительского тега. Далее — история создания онлайн-инструмента **[Can I Include](https://caninclude.glitch.me/).**\n"
+      )
       .toString();
     expect(result).toEqual(
-      "проверить секцию **Categories,** а у родительского тега\n"
+      "проверить секцию **Categories,** а у родительского тега. Далее — история создания онлайн-инструмента **[Can I Include](https://caninclude.glitch.me/).**\n"
     );
   });
 
