@@ -1,3 +1,7 @@
+## 2.1.6 (May 5, 2020)
+
+update dev dependencies
+
 ## 2.1.5 (May 5, 2020)
 
 fix case with inline code

@@ -1,3 +1,4 @@
+const { describe, it, expect } = require("@jest/globals");
 const remarkTypograf = require("./index");
 const Typograf = require("typograf");
 const remark = require("remark");

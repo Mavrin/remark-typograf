@@ -1,6 +1,6 @@
 {
   "name": "@mavrin/remark-typograf",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "description": "Plugin for remark to make your typography better with typograf",
   "main": "index.js",
   "files": [
@@ -42,15 +42,16 @@
   },
   "devDependencies": {
     "eslint": "^6.8.0",
-    "eslint-plugin-jest": "^23.8.2",
+    "eslint-plugin-jest": "^23.9.0",
     "gh-pages": "^2.2.0",
     "husky": "^4.2.5",
-    "jest": "^25.3.0",
-    "prettier": "^2.0.4",
+    "jest": "^26.0.1",
+    "jest-circus": "^26.0.1",
+    "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "remark": "^12.0.0",
     "remark-html": "^11.0.1",
-    "remark-parse": "^8.0.0",
+    "remark-parse": "^8.0.2",
     "remark-stringify": "^8.0.0",
     "unified": "^9.0.0"
   },
