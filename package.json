@@ -1,6 +1,6 @@
 {
   "name": "@mavrin/remark-typograf",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Plugin for remark to make your typography better with typograf",
   "main": "index.js",
   "files": [
@@ -52,7 +52,6 @@
     "remark-html": "^11.0.1",
     "remark-parse": "^8.0.0",
     "remark-stringify": "^8.0.0",
-    "typograf": "^6.11.0",
     "unified": "^9.0.0"
   },
   "husky": {

@@ -1,3 +1,7 @@
+## 2.1.5 (May 5, 2020)
+
+fix case with inline code
+
 ## 2.1.4 (May 5, 2020)
 
 use visit method instead of own tree walker

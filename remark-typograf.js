@@ -40,6 +40,9 @@ function remarkTypograf(config = {}) {
 
   function getTextNodes(tree) {
     const textNodes = [];
+    if (tree.type === "inlineCode") {
+      textNodes.push("`" + tree.value + "`");
+    }
     if (typeof tree.value === "string") {
       textNodes.push(tree.value);
     }

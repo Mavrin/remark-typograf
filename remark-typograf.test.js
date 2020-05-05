@@ -88,9 +88,9 @@ describe("remarkjs typograf", () => {
   it("Should handle for backtick", () => {
     const result = remark()
       .use(remarkTypograf, { locale: ["ru"] })
-      .processSync("some... `tick tick...` some... test .")
+      .processSync("some... `:tick tick...` some... test `.test` test .")
       .toString();
-    expect(result).toEqual("some… `tick tick...` some… test.\n");
+    expect(result).toEqual("some… `:tick tick...` some… test `.test` test.\n");
   });
 
   it("Should handle list", () => {
