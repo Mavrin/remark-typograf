@@ -1,9 +1,0 @@
-.github
-.idea
-dist
-scripts
-.editorconfig
-.eslintrc.js
-remarkjs-typograf.test.js
-examples
-coverage

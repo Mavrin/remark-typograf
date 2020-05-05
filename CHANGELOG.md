@@ -1,3 +1,7 @@
+## 2.1.3 (May 5, 2020)
+
+use files section in package.json instead of .npmignore
+
 ## 2.1.2 (May 5, 2020)
 
 Fix case with mark and punctuation. Before the fix, plugin add an unnecessary comma.
