@@ -1,3 +1,13 @@
+## 2.1.2 (May 5, 2020)
+
+Fix case with mark and punctuation. Before the fix, plugin add an unnecessary comma.
+
+```
+    **Categories,** а у родительского тега // original markdonw
+    **Categories,**, а у родительского тега // before the fix
+    **Categories,** а у родительского тега // after the fix
+```
+
 ## 2.1.1 (Apr 26, 2020)
 
 Fix readme

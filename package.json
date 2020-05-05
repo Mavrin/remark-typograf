@@ -1,6 +1,6 @@
 {
   "name": "@mavrin/remark-typograf",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Plugin for remark to make your typography better with typograf",
   "main": "index.js",
   "scripts": {

@@ -105,11 +105,31 @@ describe("remarkjs typograf", () => {
     const result = remark()
       .use(remarkTypograf, { locale: ["ru"] })
       .processSync(
-        "_Italic..._ some... **bold...** . New code [link...](https://github.com) sentence , ~~во внимание~~\n"
+        "_Italic..._ some... **bold...** **bold** . New code [link...](https://github.com) sentence , ~~во внимание~~\n"
       )
       .toString();
     expect(result).toEqual(
-      "_Italic…_ some… **bold…**. New code [link…](https://github.com) sentence, ~~во внимание~~\n"
+      "_Italic…_ some… **bold…** **bold**. New code [link…](https://github.com) sentence, ~~во внимание~~\n"
+    );
+  });
+
+  it("Should mark and punctuation", () => {
+    const result = remark()
+      .use(remarkTypograf, { locale: ["ru"] })
+      .processSync("проверить секцию **Categories,** а у родительского тега\n")
+      .toString();
+    expect(result).toEqual(
+      "проверить секцию **Categories,** а у родительского тега\n"
+    );
+  });
+
+  it("Should handle bullet list", () => {
+    const result = remark({ commonmark: true })
+      .use(remarkTypograf, { locale: ["ru"] })
+      .processSync("list:\n- one item\n- В простом случае,\n- two item")
+      .toString();
+    expect(result).toEqual(
+      "list:\n\n-   one item\n-   В простом случае,\n-   two item\n"
     );
   });
 });

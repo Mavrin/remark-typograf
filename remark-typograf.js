@@ -1,8 +1,6 @@
 const visit = require("unist-util-visit");
 const Typograf = require("typograf");
 const escapeRegexp = require("lodash.escaperegexp");
-const inlineBlockPlaceholder = `inlineBlockPlaceholder`;
-const inlineBlockPlaceHolderLength = inlineBlockPlaceholder.length;
 
 function remarkTypograf(config = {}) {
   let { typograf, builtIn = true, keywords = [], ...typografConfig } = config;
@@ -40,28 +38,58 @@ function remarkTypograf(config = {}) {
     typograf = new Typograf(typografConfig);
   }
 
+  function getTextNodes(child, textNodes = []) {
+    const children = child.children;
+    if (typeof child.value === "string") {
+      textNodes.push(child.value);
+    }
+    if (!children) {
+      return textNodes;
+    }
+    for (const child of children) {
+      if (typeof child.value === "string") {
+        textNodes.push(child.value);
+      } else {
+        getTextNodes(child.children, textNodes);
+      }
+    }
+    return textNodes;
+  }
+
+  function getLeftSiblingText(index, children) {
+    const textNodes = getTextNodes(children[index - 1]);
+    return typograf.execute(textNodes.pop() || "");
+  }
+
+  function getRightSiblingText(index, children) {
+    const textNodes = getTextNodes(children[index + 1]);
+    return typograf.execute(textNodes.shift() || "");
+  }
+
   function applyTypograf(text, index, parent) {
     if (index === 0 && parent.children.length > 1) {
-      const typografedText = typograf.execute(text + inlineBlockPlaceholder);
+      const rightText = getRightSiblingText(index, parent.children);
+      const typografedText = typograf.execute(text + rightText);
       return typografedText.substring(
         0,
-        typografedText.length - inlineBlockPlaceHolderLength
+        typografedText.length - rightText.length
       );
     }
     if (index === parent.children.length - 1 && parent.children.length > 1) {
-      const typografedText = typograf.execute(inlineBlockPlaceholder + text);
+      const leftText = getLeftSiblingText(index, parent.children);
+      const typografedText = typograf.execute(leftText + text);
       return typografedText.substring(
-        inlineBlockPlaceHolderLength,
-        typografedText.length + inlineBlockPlaceHolderLength
+        leftText.length,
+        typografedText.length + leftText.length
       );
     }
     if (parent.children.length > 1) {
-      const typografedText = typograf.execute(
-        inlineBlockPlaceholder + text + inlineBlockPlaceholder
-      );
+      const leftText = getLeftSiblingText(index, parent.children);
+      const rightText = getRightSiblingText(index, parent.children);
+      const typografedText = typograf.execute(leftText + text + rightText);
       return typografedText.substring(
-        inlineBlockPlaceHolderLength,
-        typografedText.length - inlineBlockPlaceHolderLength
+        leftText.length,
+        typografedText.length - rightText.length
       );
     }
     return typograf.execute(text);
