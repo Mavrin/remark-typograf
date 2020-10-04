@@ -2,6 +2,11 @@ const { describe, it, expect } = require("@jest/globals");
 const remarkTypograf = require("./index");
 const Typograf = require("typograf");
 const remark = require("remark");
+const gfm = require("remark-gfm");
+
+function getRemark() {
+  return remark().data(`settings`, { bullet: `-`, emphasis: `_` });
+}
 
 describe("remarkjs typograf", () => {
   it("should throw error if typofraf is not specified", () => {
@@ -25,7 +30,7 @@ describe("remarkjs typograf", () => {
 
   it("Should work with explicit typograf", () => {
     expect(
-      remark()
+      getRemark()
         .use(remarkTypograf, {
           typograf: new Typograf({ locale: ["en-US"] }),
           builtIn: false,
@@ -37,7 +42,7 @@ describe("remarkjs typograf", () => {
 
   it("Should apply with default config", () => {
     expect(
-      remark()
+      getRemark()
         .use(remarkTypograf)
         .processSync("## spread operator... end . Some test.\n")
         .toString()
@@ -46,7 +51,7 @@ describe("remarkjs typograf", () => {
 
   it("Should apply", () => {
     expect(
-      remark()
+      getRemark()
         .use(remarkTypograf, { locale: ["en-US"] })
         .processSync("## spread operator... end . Some test.\n")
         .toString()
@@ -54,7 +59,8 @@ describe("remarkjs typograf", () => {
   });
 
   it("should apply keywords config", () => {
-    const result = remark()
+    const result = getRemark()
+      .use(gfm)
       .use(remarkTypograf, {
         keywords: [":(", "TL;DR"],
       })
@@ -67,7 +73,7 @@ describe("remarkjs typograf", () => {
 
   it("Should apply default locale", () => {
     expect(
-      remark()
+      getRemark()
         .use(remarkTypograf, {})
         .processSync("## spread operator... end . Some test.\n")
         .toString()
@@ -75,7 +81,7 @@ describe("remarkjs typograf", () => {
   });
 
   it("Should handle for code block", () => {
-    const result = remark()
+    const result = getRemark()
       .use(remarkTypograf, { locale: ["ru"] })
       .processSync(
         "value - some code...\n```js\nconst value = [...[1,3]];\n```"
@@ -87,7 +93,7 @@ describe("remarkjs typograf", () => {
   });
 
   it("Should handle for backtick", () => {
-    const result = remark()
+    const result = getRemark()
       .use(remarkTypograf, { locale: ["ru"] })
       .processSync("some... `:tick tick...` some... test `.test` test .")
       .toString();
@@ -95,7 +101,7 @@ describe("remarkjs typograf", () => {
   });
 
   it("Should handle list", () => {
-    const result = remark()
+    const result = getRemark()
       .use(remarkTypograf, { locale: ["ru"] })
       .processSync("# header\n - one point...\n - second point\n")
       .toString();
@@ -103,7 +109,8 @@ describe("remarkjs typograf", () => {
   });
 
   it("Should handle inline block type", () => {
-    const result = remark()
+    const result = getRemark()
+      .use(gfm)
       .use(remarkTypograf, { locale: ["ru"] })
       .processSync(
         "_Italic..._ some... **bold...** **bold** . New code [link...](https://github.com) sentence , ~~во внимание~~\n"
@@ -115,7 +122,7 @@ describe("remarkjs typograf", () => {
   });
 
   it("Should mark and punctuation", () => {
-    const result = remark()
+    const result = getRemark()
       .use(remarkTypograf, { locale: ["ru"] })
       .processSync(
         "проверить секцию **Categories,** а у родительского тега. Далее — история создания онлайн-инструмента **[Can I Include](https://caninclude.glitch.me/).**\n"
@@ -127,7 +134,7 @@ describe("remarkjs typograf", () => {
   });
 
   it("Should handle bullet list", () => {
-    const result = remark({ commonmark: true })
+    const result = getRemark()
       .use(remarkTypograf, { locale: ["ru"] })
       .processSync("list:\n- one item\n- В простом случае,\n- two item")
       .toString();
