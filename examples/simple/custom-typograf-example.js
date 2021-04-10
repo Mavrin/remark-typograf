@@ -11,4 +11,4 @@ const processed = remark()
   })
   .processSync(fs.readFileSync(path.resolve(__dirname, "example.md")));
 
-fs.writeFileSync(path.resolve(__dirname, "processed-example.md"), processed);
+fs.writeFileSync(path.resolve(__dirname, "processed-example.md"), processed.toString());

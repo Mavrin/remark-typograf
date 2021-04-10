@@ -42,7 +42,7 @@ const markdownResultWithTypograf = unified()
     rule: "-",
     ruleSpaces: false,
   })
-  .processSync(originalMarkdown);
+  .processSync(originalMarkdown).toString();
 
 const htmlResultWithTypograf = remark()
   .use(remarkjsTypograf, {
