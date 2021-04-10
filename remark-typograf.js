@@ -42,10 +42,15 @@ function remarkTypograf(config = {}) {
     const textNodes = [];
     if (tree.type === "inlineCode") {
       textNodes.push("`" + tree.value + "`");
+      return textNodes;
     }
     if (typeof tree.value === "string") {
       textNodes.push(tree.value);
+      return textNodes;
     }
+    visit(tree, "inlineCode", (node) => {
+      textNodes.push("`" + node.value + "`");
+    });
     visit(tree, "text", (node) => {
       textNodes.push(node.value);
     });

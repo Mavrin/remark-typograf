@@ -121,6 +121,18 @@ describe("remarkjs typograf", () => {
     );
   });
 
+  it("Should not trim space after comma if next word is inline code link", () => {
+    const result = getRemark()
+      .use(remarkTypograf, { locale: ["ru"] })
+      .processSync(
+        "Привет, [как]()дела. Привет, [`как`]()дела. Привет, [_как_]()дела.\n"
+      )
+      .toString();
+    expect(result).toEqual(
+      "Привет, [как]()дела. Привет, [`как`]()дела. Привет, [_как_]()дела.\n"
+    );
+  })
+
   it("Should mark and punctuation", () => {
     const result = getRemark()
       .use(remarkTypograf, { locale: ["ru"] })
